@@ -1,6 +1,6 @@
 FROM debian:9.2
 
-LABEL maintainer "opsxcq@strm.sh"
+LABEL maintainer "rorym@mccune.org.uk"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -16,6 +16,7 @@ RUN apt-get update && \
     php-pgsql \
     php-pear \
     php-gd \
+    wget \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -24,6 +25,9 @@ COPY php.ini /etc/php5/apache2/php.ini
 COPY dvwa /var/www/html
 
 COPY config.inc.php /var/www/html/config/
+
+RUN wget https://github.com/DataDog/dd-trace-php/releases/latest/download/datadog-setup.php -O datadog-setup.php
+RUN php datadog-setup.php --php-bin=all --enable-appsec --enable-profiling
 
 RUN chown www-data:www-data -R /var/www/html && \
     rm /var/www/html/index.html
