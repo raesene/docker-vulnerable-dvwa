@@ -1,4 +1,4 @@
-FROM debian:9.2
+FROM debian:10.12
 
 LABEL maintainer "rorym@mccune.org.uk"
 
@@ -16,6 +16,7 @@ RUN apt-get update && \
     php-pgsql \
     php-pear \
     php-gd \
+    libcurl4 \
     wget \
     && \
     apt-get clean && \
