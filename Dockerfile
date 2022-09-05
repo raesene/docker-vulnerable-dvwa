@@ -39,5 +39,12 @@ RUN service mysql start && \
 
 EXPOSE 80
 
+RUN echo 'SetEnv DD_AGENT_HOST datadog-agent' > /etc/apache2/conf-enabled/environment.conf
+RUN echo 'SetEnv DD_TRACE_AGENT_PORT 8126' >> /etc/apache2/conf-enabled/environment.conf
+RUN echo 'SetEnv DD_ENV workshop' >> /etc/apache2/conf-enabled/environment.conf
+RUN echo 'SetEnv DD_SERVICE dvwa' >> /etc/apache2/conf-enabled/environment.conf
+RUN echo 'SetEnv DD_APPSEC_ENABLED true' >> /etc/apache2/conf-enabled/environment.conf
+
+
 COPY main.sh /
 ENTRYPOINT ["/main.sh"]
